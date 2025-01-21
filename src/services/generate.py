@@ -1,1 +1,5 @@
+'''
+generate passwords
+'''
+
 raise NotImplementedError
