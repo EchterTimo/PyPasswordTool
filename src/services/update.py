@@ -79,8 +79,8 @@ class VersionDetails:
             fetch_error=e
         )
 
-    def __repr__(self) -> str:
-        return "VersionDetails(current_version='v0.0.0', latest_version_release=GitRelease(title="v1.2.1"), fetch_error=None)"
+    # def __repr__(self) -> str:
+        # return VersionDetails(current_version='v0.0.0', latest_version_release=GitRelease(title="v1.2.1"), fetch_error=None)
         # todo: edit __repr__ method
 
 
@@ -129,3 +129,8 @@ if __name__ == '__main__':
         print(t.current_version)
         print(t.latest_version)
         print(t.version_status)
+    else:
+        print(t.fetch_error)
+
+    # todo: implement a way for the user to download the newest version
+    # ! manual or automatic?
