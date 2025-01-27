@@ -31,12 +31,12 @@ class Password:
     @classmethod
     def generate(
         cls,
-        length: int,
         use_lower_case: bool,
         use_upper_case: bool,
         use_digits: bool,
         use_special_characters: bool,
-        avoid_ambiguous: bool
+        avoid_ambiguous: bool,
+        length: int = 8
     ):
         '''
         Generate a password based on the given configuration
@@ -56,6 +56,10 @@ class Password:
                 c for c in character_pool if c not in AMBIGUOUS_CHARACTERS)
 
         pw_text = ''.join(random.sample(character_pool, length))
+
+        if len(pw_text < 1):
+            raise ValueError("Password should be at least one character.")
+
         return Password(text=pw_text)
 
     def __str__(self) -> str:
@@ -83,4 +87,4 @@ if __name__ == '__main__':
         use_special_characters=True,
         avoid_ambiguous=True,
     )
-    pw.copy_to_clipboard()
+    print(pw.text)
