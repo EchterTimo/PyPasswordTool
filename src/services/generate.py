@@ -12,6 +12,7 @@ import pyperclip
 
 AMBIGUOUS_CHARACTERS = set(["O", "0", "l", "1", "I", "~", "-", ",", "."])
 DOWNLOADS_FOLDER = os.path.join(os.path.expanduser("~"), "Downloads")
+SPECIAL_CHARACTERS = "!@#$%^&*()-_+=<>?"
 
 
 @dataclass
@@ -48,7 +49,7 @@ class Password:
         if use_digits:
             character_pool += string.digits
         if use_special_characters:
-            character_pool += "!@#$%^&*()-_+=<>?"
+            character_pool += SPECIAL_CHARACTERS
         if avoid_ambiguous:
             # overwrite the list and remove ambiguous chars
             character_pool = ''.join(
