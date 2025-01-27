@@ -17,7 +17,7 @@ class PasswordEvaluation:
     suggestions: list[str]
 
     @staticmethod
-    def get_blacklist(
+    def _get_blacklist(
         file_path: str = "src/services/blacklist.txt"
     ) -> list[str]:
         '''
@@ -91,7 +91,7 @@ class PasswordEvaluation:
             points += 2
 
         # Check for commonly used passwords (example, extend as needed)
-        for forbidden_word in cls.get_blacklist():
+        for forbidden_word in cls._get_blacklist():
             if forbidden_word in password.lower():
                 suggestions.append(
                     f"Your password '{password}' should not include '{
