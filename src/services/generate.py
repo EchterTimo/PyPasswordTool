@@ -57,7 +57,7 @@ class Password:
 
         pw_text = ''.join(random.sample(character_pool, length))
 
-        if len(pw_text < 1):
+        if len(pw_text) < 1:
             raise ValueError("Password should be at least one character.")
 
         return Password(text=pw_text)
@@ -88,3 +88,4 @@ if __name__ == '__main__':
         avoid_ambiguous=True,
     )
     print(pw.text)
+    pw.copy_to_clipboard()
