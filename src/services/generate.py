@@ -58,6 +58,11 @@ class Password:
         return Password(text=pw_text)
 
 
+    def __str__(self) -> str:
+        '''return the current password text'''
+        self.text
+
+
 @dataclass
 class PasswordList:
     '''Util class to hold multiple passwords for exporting purposes'''
