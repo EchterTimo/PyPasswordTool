@@ -57,10 +57,9 @@ class Password:
         pw_text = ''.join(random.sample(character_pool, length))
         return Password(text=pw_text)
 
-
     def __str__(self) -> str:
         '''return the current password text'''
-        self.text
+        return self.text
 
 
 @dataclass
@@ -83,3 +82,4 @@ if __name__ == '__main__':
         use_special_characters=True,
         avoid_ambiguous=True,
     )
+    pw.copy_to_clipboard()
