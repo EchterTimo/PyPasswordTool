@@ -5,6 +5,13 @@ widgets (abstractions) for the the cli
 from dataclasses import dataclass
 from typing import Callable
 
+import os
+
+
+def clear_console() -> None:
+    '''clears the terminal'''
+    os.system("cls")
+
 
 @dataclass
 class Option:
@@ -20,36 +27,42 @@ class Selector:
     question: str
     options: list[Option]
     default_option: Option = None
-    ask_again: bool = True
-    clear_console_before: bool = False
+    show_errors: bool = False
     input_prefix: str = "> "
 
-    def _perform_input(self) -> str:
+    @property
+    def options_values(self) -> list[str]:
+        '''return a list of all possible values'''
+        return [option.value for option in self.options]
+
+    def _input_loop(self) -> str:
         '''use the default input func'''
-        print(self.question)
-        for o in self.options:
-            print(f" [{o.value}] {o.description}")
-        return input(self.input_prefix)
+        while True:
+            clear_console()
+
+            # print the Selection Menu
+            print(self.question)
+            print()
+            for o in self.options:
+                print(f" [{o.value}] {o.description}")
+
+            # get the user input
+            user_input = input(self.input_prefix)
+
+            # check if the input is allowed
+            if user_input in self.options_values:
+                break
+        return user_input
 
     def get_option(self) -> Option:
         '''
         let the user decide for an option. returns the options.
         '''
-        user_input = self._perform_input()
+        user_input = self._input_loop()
         for option in self.options:
             if option.value.lower() == user_input.lower():
                 return option
         return self.default_option
-
-    def run_option(self) -> None:
-        '''
-        let the user decide for an option. runs the options function.
-        There should be a func for every Option. Including the default case.
-        If the func is None no code will be executed
-        '''
-        option = self.get_option()
-        if option:
-            option.func()
 
 
 @dataclass
