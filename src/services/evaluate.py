@@ -98,7 +98,8 @@ class PasswordEvaluation:
                         forbidden_word}'.")
 
         if " " in password:
-            suggestions.append("Avoid using spaces in your password.")
+            suggestions.append(
+                "Avoid using spaces in your password for compatibility.")
 
         return PasswordEvaluation(
             text=password,
@@ -109,6 +110,7 @@ class PasswordEvaluation:
 
 if __name__ == '__main__':
     pw_eval = PasswordEvaluation.evaluate("123password")
+    print(pw_eval.rating)
     print(pw_eval)
     for sug in pw_eval.suggestions:
         print(sug)
