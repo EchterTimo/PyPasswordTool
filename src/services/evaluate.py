@@ -3,7 +3,10 @@ evaluate passwords
 '''
 
 from dataclasses import dataclass
-from generate import SPECIAL_CHARACTERS
+from .generate import SPECIAL_CHARACTERS
+
+
+MAX_POINTS = 11
 
 
 @dataclass
@@ -37,6 +40,18 @@ class PasswordEvaluation:
             return "Medium"
         elif self.points > 10:
             return "Strong"
+
+    @property
+    def rating_colored(self) -> str:
+        '''
+        Get a COLORED rating based on the amount of points
+        '''
+        if self.points < 7:
+            return "[bold red]" + "Weak" + "[/bold red]"
+        elif self.points >= 7:
+            return "[bold yellow]" + "Medium" + "[/bold yellow]"
+        elif self.points > 10:
+            return "[bold red]" + "Medium" + "[/bold red]"
 
     def __repr__(self):
         '''
