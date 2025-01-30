@@ -14,7 +14,7 @@ from github.GithubException import (
 )
 
 
-__version__: str = "v0.0.0"  # todo: adjust this version for release
+__version__: str = "v0.0.1"  # todo: adjust this version for release
 repo_id_for_testing: int = 373494377  # todo: remove this
 THIS_REPO_ID: int = 919969264
 '''
