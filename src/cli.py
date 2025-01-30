@@ -34,12 +34,12 @@ def handle_version_check():
         print(
             f"{Style.BRIGHT + Fore.RED}{v.current_version}{Style.RESET_ALL}" +
             " -> " +
-            f"{Style.BRIGHT + Fore.RED}{v.latest_version}{Style.RESET_ALL}"
+            f"{Style.BRIGHT + Fore.BLUE}{v.latest_version}{Style.RESET_ALL}"
         )
         print(v.latest_version_release.html_url)
-        input("Do you want to open the url in your web browser")
         choice = input(
-            "Do you want to open this link? (y/n): ").strip().lower()
+            "Do you want to open this link in your web browser? (y/n): "
+        ).strip().lower()
         if choice == "y":
             webbrowser.open(v.latest_version_release.html_url)
             pause()
