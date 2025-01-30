@@ -2,11 +2,18 @@
 command line interface for this tool
 '''
 
+import webbrowser
 import art
+from colorama import init, Fore, Style
+
 from utils.widgets import Selector, Option, clear_console
 from services.evaluate import PasswordEvaluation, MAX_POINTS
-from rich.console import Console
-console = Console()
+from services.update import (
+    VersionDetails, determine_version_status, VersionStatus
+)
+
+init(autoreset=True)
+
 
 PROJECT_NAME = "PyPasswordTool"
 TITLE = art.text2art(PROJECT_NAME, font="small", space=0)
@@ -14,7 +21,29 @@ TITLE = art.text2art(PROJECT_NAME, font="small", space=0)
 
 def handle_version_check():
     '''this file handles the version checking'''
-    pass  # todo
+    v = VersionDetails.get()
+    if v.fetch_error:
+        print("Version check failed")
+        print(f"You are currently using {v.current_version}")
+        pause()
+        return
+
+    status = determine_version_status(v.current_version, v.latest_version)
+    if status == VersionStatus.OUTDATED:
+        print("A new version is available for this software.")
+        print(
+            f"{Style.BRIGHT + Fore.RED}{v.current_version}{Style.RESET_ALL}" +
+            " -> " +
+            f"{Style.BRIGHT + Fore.RED}{v.latest_version}{Style.RESET_ALL}"
+        )
+        print(v.latest_version_release.html_url)
+        input("Do you want to open the url in your web browser")
+        choice = input(
+            "Do you want to open this link? (y/n): ").strip().lower()
+        if choice == "y":
+            webbrowser.open(v.latest_version_release.html_url)
+            pause()
+            return
 
 
 def pause() -> None:
@@ -25,11 +54,10 @@ def pause() -> None:
 def menu_evaluate() -> None:
     '''menu for password evaluation'''
     clear_console()
-    console.print("[bold]Please enter a password to evaluate.[/bold]")
+    print(Style.BRIGHT + "Please enter a password to evaluate")
     password_input = input("Password: ")
     pw = PasswordEvaluation.evaluate(password_input)
-    console.print(f"Rating: {pw.rating_colored} ({
-                  pw.points} / {MAX_POINTS} Points)")
+    print(f"Rating: {pw.rating_colored} ({pw.points} / {MAX_POINTS} Points)")
     print("Suggestions:")
     for sug in pw.suggestions:
         print("- " + sug)
@@ -39,7 +67,8 @@ def menu_evaluate() -> None:
 
 def menu_generate() -> None:
     '''menu for password generation'''
-    raise NotImplementedError
+    print("This feature is not available yet.")
+    pause()
 
 
 def start_cli() -> None:

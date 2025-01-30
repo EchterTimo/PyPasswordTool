@@ -4,6 +4,8 @@ evaluate passwords
 
 from dataclasses import dataclass
 from .generate import SPECIAL_CHARACTERS
+from colorama import init, Fore, Style
+init(autoreset=True)
 
 
 MAX_POINTS = 11
@@ -46,12 +48,13 @@ class PasswordEvaluation:
         '''
         Get a COLORED rating based on the amount of points
         '''
+        # todo bold
         if self.points < 7:
-            return "[bold red]" + "Weak" + "[/bold red]"
+            return f"{Style.BRIGHT + Fore.RED}Weak{Style.RESET_ALL}"
         elif self.points >= 7:
-            return "[bold yellow]" + "Medium" + "[/bold yellow]"
+            return f"{Style.BRIGHT + Fore.YELLOW}Medium{Style.RESET_ALL}"
         elif self.points > 10:
-            return "[bold red]" + "Medium" + "[/bold red]"
+            return f"{Style.BRIGHT + Fore.GREEN}Strong{Style.RESET_ALL}"
 
     def __repr__(self):
         '''
